@@ -5,13 +5,15 @@
  */
 package modele;
 
+import java.util.TreeMap;
+
 /**
  *
  * @author sio
  */
-public class Test {
+public class test {
     public static void main(String[] args) {
-        Pays p = PaysDAO.getLesDeps();
+        TreeMap<String, Departement> p = PaysDAO.getLesDeps();
         System.out.println("");
     }
 }

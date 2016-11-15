@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
+import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,31 +22,47 @@ import java.util.logging.Logger;
  */
 public class PaysDAO {
 
-    public static Pays getLesDeps() {
+    public static TreeMap<String, Departement> getLesDeps() {
         try {
             Connection con = Connect.get();
             Statement req;
             req = con.createStatement();
             ResultSet rs = req.executeQuery("select distinct departement from medecin");
 
+            Statement reqP = con.createStatement();
+
             String num;
-            TreeMap<Integer, Departement> lesDeps;
+            String id;
+            String nom;
+            String prenom;
+            String adresse;
+            String tel;
+            String spe;
+            TreeMap<String, Departement> lesDeps = new TreeMap<>();
+            //Collection<Medecin> lesMeds = new TreeSet<>();
 
             while (rs.next()) {
                 num = rs.getString("departement");
-                lesDeps = new TreeMap<Integer, Departement>();
-
-                Statement reqP = con.createStatement();
                 ResultSet rsP = reqP.executeQuery(
-                        "select id, nom, prenom, adresse, tel "
+                        "select id, nom, prenom, adresse, tel, specialitecomplementaire "
                         + "from medecin "
                         + "where departement = '" + num + "'");
+                Collection<Medecin> lesMeds = new TreeSet<>();
                 while (rsP.next()) {
-                    
-
+                    id = rsP.getString("id");
+                    nom = rsP.getString("nom");
+                    prenom = rsP.getString("prenom");
+                    adresse = rsP.getString("adresse");
+                    tel = rsP.getString("tel");
+                    spe = rsP.getString("specialitecomplementaire");
+                       
+                    Medecin unMed = new Medecin(nom, prenom, adresse, tel, spe, id);
+                    lesMeds.add(unMed);
                 }
-                rsP.close();
+                Departement unDep = new Departement(num, lesMeds);
+                    lesDeps.put(num, unDep);
             }
+            return lesDeps;
 
         } catch (SQLException ex) {
             Logger.getLogger(PaysDAO.class.getName()).log(Level.SEVERE, null, ex);

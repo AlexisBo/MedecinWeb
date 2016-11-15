@@ -15,11 +15,11 @@ import java.util.TreeSet;
 public class Departement implements Comparable<Departement> {
 
     private String num;
-    private TreeSet<Medecin> lesMeds = new TreeSet<Medecin>();
+    private Collection<Medecin> lesMeds = new TreeSet<Medecin>();
 
-    public Departement(String num, TreeSet<Medecin> m) {
+    public Departement(String num, Collection<Medecin> lesMeds) {
         this.num = num;
-        lesMeds = m;
+        this.lesMeds = lesMeds;
     }
 
     public String getNum() {
