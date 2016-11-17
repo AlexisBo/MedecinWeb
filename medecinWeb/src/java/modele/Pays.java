@@ -15,12 +15,13 @@ import java.util.TreeMap;
  */
 public class Pays {
 
-    private TreeMap<Integer, Departement> lesDeps = new TreeMap<>();
+    private TreeMap<String, Departement> lesDeps = new TreeMap<>();
 
     public Pays() {
+        lesDeps = PaysDAO.getLesDeps();
     }
 
-    public TreeMap<Integer, Departement> getLesDeps() {
+    public TreeMap<String, Departement> getLesDeps() {
         return lesDeps;
     }
 

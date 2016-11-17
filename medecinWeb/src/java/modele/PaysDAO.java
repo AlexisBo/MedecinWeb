@@ -39,7 +39,6 @@ public class PaysDAO {
             String tel;
             String spe;
             TreeMap<String, Departement> lesDeps = new TreeMap<>();
-            //Collection<Medecin> lesMeds = new TreeSet<>();
 
             while (rs.next()) {
                 num = rs.getString("departement");
