@@ -13,7 +13,7 @@ import java.util.TreeMap;
  */
 public class test {
     public static void main(String[] args) {
-        TreeMap<String, Departement> p = PaysDAO.getLesDeps();
+        Pays p = new Pays();
         System.out.println("");
     }
 }

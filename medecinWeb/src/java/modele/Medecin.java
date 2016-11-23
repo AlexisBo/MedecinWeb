@@ -16,15 +16,17 @@ public class Medecin implements Comparable <Medecin> {
     private String adresse;
     private String tel;
     private String spe;
+    private String dep;
     private String id;
 
-    public Medecin(String nom, String prenom, String adresse, String tel, String spe, String id) {
+    public Medecin(String nom, String prenom, String adresse, String tel, String spe, String id, String dep) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
         this.tel = tel;
         this.spe = spe;
         this.id = id;
+        this.dep = dep;
     }
 
     public String getNom() {
@@ -46,6 +48,12 @@ public class Medecin implements Comparable <Medecin> {
     public String getSpe() {
         return spe;
     }
+
+    public String getDep() {
+        return dep;
+    }
+    
+    
 
     @Override
     public int compareTo(Medecin o) {

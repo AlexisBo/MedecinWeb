@@ -25,10 +25,26 @@
             <button type="submit">Valider</button>
         </form>
         <br>
+        
+        <h1>Liste des Spécialités</h1>
+        <form action="control?choix=spec" method="post">
+            <select name="dep">
+                <c:forEach var="p" items="${liste}">
+
+                    <option>${p.value.num}</option>
+
+                </c:forEach>
+            </select>
+            <button type="submit">Valider</button>
+        </form>
+        <br>
+        
         <form action="control?choix=trier" method="post">
             <input type="text" name="prefix" placeholder="Nom">
             <button type="submit">Valider</button>
         </form>
+        
+        
 
     </body>
 </html>

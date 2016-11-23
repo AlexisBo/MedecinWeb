@@ -17,9 +17,8 @@ public class Departement implements Comparable<Departement> {
     private String num;
     private Collection<Medecin> lesMeds = new TreeSet<Medecin>();
 
-    public Departement(String num, Collection<Medecin> lesMeds) {
+    public Departement(String num) {
         this.num = num;
-        this.lesMeds = lesMeds;
     }
 
     public String getNum() {
@@ -31,15 +30,18 @@ public class Departement implements Comparable<Departement> {
     }
 
     public Collection<Medecin> getLesMeds(String prefix) {
-        Collection<Medecin> lesMedecinsTrier= new TreeSet<>();
-        for (Medecin unMedecin : this.lesMeds){
-            if (unMedecin.getNom().startsWith(prefix)){
+        Collection<Medecin> lesMedecinsTrier = new TreeSet<>();
+        for (Medecin unMedecin : this.lesMeds) {
+            if (unMedecin.getNom().startsWith(prefix)) {
                 lesMedecinsTrier.add(unMedecin);
             }
         }
         return lesMedecinsTrier;
     }
-    
+
+    public void addUnMed(Medecin unMed) {
+        lesMeds.add(unMed);
+    }
 
     @Override
     public int compareTo(Departement o) {

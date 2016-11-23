@@ -20,6 +20,7 @@ import modele.Departement;
 import modele.Medecin;
 import modele.Pays;
 import modele.PaysDAO;
+import modele.Specialite;
 
 /**
  *
@@ -49,6 +50,7 @@ public class control extends HttpServlet {
         String page = "dep.jsp";
         String page2 = "med.jsp";
         String page3 = "medTrier.jsp";
+        String page4 = "spe.jsp";
 
         String choix = request.getParameter("choix") == null ? "deps" : request.getParameter("choix");
 
@@ -71,6 +73,12 @@ public class control extends HttpServlet {
             }
                 request.setAttribute("liste", lesMedecins);
                 request.getRequestDispatcher(page3).forward(request, response);
+                break;
+            case "spec":
+                TreeMap<String, Specialite> lesSpes = p.getLesSpes();
+                request.setAttribute("liste", lesSpes);
+                request.getRequestDispatcher(page4).forward(request, response);
+                
                 break;
         }
     }
