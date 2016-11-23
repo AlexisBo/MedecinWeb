@@ -14,8 +14,8 @@
     </head>
     <body>
         <h1>Liste des départements</h1>
-        <form action="control" method="get">
-            <select name="choix">
+        <form action="control?choix=meds" method="post">
+            <select name="dep">
                 <c:forEach var="p" items="${liste}">
 
                     <option>${p.value.num}</option>
@@ -24,5 +24,11 @@
             </select>
             <button type="submit">Valider</button>
         </form>
+        <br>
+        <form action="control?choix=trier" method="post">
+            <input type="text" name="prefix" placeholder="Nom">
+            <button type="submit">Valider</button>
+        </form>
+
     </body>
 </html>

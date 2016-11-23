@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,32 +48,44 @@ public class control extends HttpServlet {
 
         String page = "dep.jsp";
         String page2 = "med.jsp";
+        String page3 = "medTrier.jsp";
 
-        String choix = request.getParameter("choix");
+        String choix = request.getParameter("choix") == null ? "deps" : request.getParameter("choix");
 
-        if (choix == null) {
-            TreeMap<String, Departement> lesDeps = p.getLesDeps();
-            request.setAttribute("liste", lesDeps);
-            request.getRequestDispatcher(page).forward(request, response);
-        } else {
-            Collection<Medecin> unMed = p.getLeDep(choix).getLesMeds();
-            request.setAttribute("liste", unMed);
-            request.getRequestDispatcher(page2).forward(request, response);
+        switch (choix) {
+            case "deps":
+                TreeMap<String, Departement> lesDeps = p.getLesDeps();
+                request.setAttribute("liste", lesDeps);
+                request.getRequestDispatcher(page).forward(request, response);
+                break;
+            case "meds":
+                String dep = request.getParameter("dep");
+                Collection<Medecin> unMed = p.getLeDep(dep).getLesMeds();
+                request.setAttribute("liste", unMed);
+                request.getRequestDispatcher(page2).forward(request, response);
+                break;
+            case "trier":
+                Collection<Medecin> lesMedecins = new TreeSet<>();
+                for (Departement unDepartement : this.p.getLesDeps().values()){
+                lesMedecins.addAll(unDepartement.getLesMeds(request.getParameter("prefix")));
+            }
+                request.setAttribute("liste", lesMedecins);
+                request.getRequestDispatcher(page3).forward(request, response);
+                break;
         }
     }
 
-
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-/**
- * Handles the HTTP <code>GET</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -86,7 +99,7 @@ public class control extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -97,7 +110,7 @@ public class control extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
