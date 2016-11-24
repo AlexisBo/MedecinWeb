@@ -16,10 +16,10 @@ public class Medecin implements Comparable <Medecin> {
     private String adresse;
     private String tel;
     private String spe;
-    private String dep;
+    private Integer dep;
     private String id;
 
-    public Medecin(String nom, String prenom, String adresse, String tel, String spe, String id, String dep) {
+    public Medecin(String nom, String prenom, String adresse, String tel, String spe, Integer dep, String id) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
@@ -49,7 +49,7 @@ public class Medecin implements Comparable <Medecin> {
         return spe;
     }
 
-    public String getDep() {
+    public Integer getDep() {
         return dep;
     }
     

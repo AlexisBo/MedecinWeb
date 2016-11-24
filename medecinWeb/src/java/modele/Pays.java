@@ -17,7 +17,7 @@ import java.util.TreeSet;
  */
 public class Pays {
 
-    private TreeMap<String, Departement> lesDeps;
+    private TreeMap<Integer, Departement> lesDeps;
     private TreeMap<String, Specialite> lesSpes;
 
     public Pays() {
@@ -26,7 +26,7 @@ public class Pays {
         this.assocMedecins(PaysDAO.getLesMeds());
     }
 
-    public TreeMap<String, Departement> getLesDeps() {
+    public TreeMap<Integer, Departement> getLesDeps() {
         return lesDeps;
     }
     
@@ -34,7 +34,7 @@ public class Pays {
         return lesSpes;
     }
 
-    public Departement getLeDep(String key) {
+    public Departement getLeDep(Integer key) {
         return this.lesDeps.get(key);
     }
     
@@ -44,10 +44,10 @@ public class Pays {
     
     private void assocMedecins(Collection<Medecin> lesMeds){
         for (Medecin unMed : lesMeds){
-            getLeDep(unMed.getDep()).addUnMed(unMed);
-            Specialite uneSpe = getLaSpe(unMed.getSpe());
-            if (uneSpe != null){
-                uneSpe.addUnMed(unMed);
+            
+            this.getLeDep(unMed.getDep()).addUnMed(unMed);
+            if (unMed.getSpe() != null){
+                this.getLaSpe(unMed.getSpe()).addUnMed(unMed);
             }
         }
     }

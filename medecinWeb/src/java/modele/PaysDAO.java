@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class PaysDAO {
 
-    public static TreeMap<String, Departement> getLesDeps() {
+    public static TreeMap<Integer, Departement> getLesDeps() {
         try {
             Connection con = Connect.get();
             Statement req;
@@ -32,32 +32,11 @@ public class PaysDAO {
 
             Statement reqP = con.createStatement();
 
-            String num;
-//            String id;
-//            String nom;
-//            String prenom;
-//            String adresse;
-//            String tel;
-//            String spe;
-            TreeMap<String, Departement> lesDeps = new TreeMap<>();
+            Integer num;
+            TreeMap<Integer, Departement> lesDeps = new TreeMap<>();
 
             while (rs.next()) {
-                num = rs.getString("departement");
-//                ResultSet rsP = reqP.executeQuery(
-//                        "select id, nom, prenom, adresse, tel, specialitecomplementaire "
-//                        + "from medecin "
-//                        + "where departement = '" + num + "'");
-//                Collection<Medecin> lesMeds = new TreeSet<>();
-//                while (rsP.next()) {
-//                    id = rsP.getString("id");
-//                    nom = rsP.getString("nom");
-//                    prenom = rsP.getString("prenom");
-//                    adresse = rsP.getString("adresse");
-//                    tel = rsP.getString("tel");
-//                    spe = rsP.getString("specialitecomplementaire");
-//                       
-//                    Medecin unMed = new Medecin(nom, prenom, adresse, tel, spe, id);
-//                    lesMeds.add(unMed);}
+                num = rs.getInt("departement");
 
                 Departement unDep = new Departement(num);
                 lesDeps.put(num, unDep);
@@ -83,10 +62,49 @@ public class PaysDAO {
             while (rs2.next()) {
 
                 libelle = rs2.getString("specialitecomplementaire");
-                Specialite uneSpe = new Specialite(libelle);
-                lesSpes.put(libelle, uneSpe);
+                if (libelle != null) {
+                    Specialite uneSpe = new Specialite(libelle);
+                    lesSpes.put(libelle, uneSpe);
+                }
             }
             return lesSpes;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PaysDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public static Collection<Medecin> getLesMeds() {
+        try {
+            Connection con = Connect.get();
+            Statement req3;
+            req3 = con.createStatement();
+            ResultSet rs3 = req3.executeQuery("select * from medecin");
+
+            String id;
+            String nom;
+            String prenom;
+            String adresse;
+            String tel;
+            String spe;
+            Integer dep;
+            Collection<Medecin> lesMeds = new HashSet<>();
+
+            while (rs3.next()) {
+
+                id = rs3.getString("id");
+                nom = rs3.getString("nom");
+                prenom = rs3.getString("prenom");
+                adresse = rs3.getString("adresse");
+                tel = rs3.getString("tel");
+                spe = rs3.getString("specialitecomplementaire");
+                dep = rs3.getInt("departement");
+
+                Medecin unMed = new Medecin(nom, prenom, adresse, tel, spe, dep, id);
+                lesMeds.add(unMed);
+            }
+            return lesMeds;
 
         } catch (SQLException ex) {
             Logger.getLogger(PaysDAO.class.getName()).log(Level.SEVERE, null, ex);

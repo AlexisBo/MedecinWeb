@@ -6,6 +6,7 @@
 package modele;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -14,14 +15,14 @@ import java.util.TreeSet;
  */
 public class Departement implements Comparable<Departement> {
 
-    private String num;
-    private Collection<Medecin> lesMeds = new TreeSet<Medecin>();
+    private Integer num;
+    private Collection<Medecin> lesMeds = new HashSet<Medecin>();
 
-    public Departement(String num) {
+    public Departement(Integer num) {
         this.num = num;
     }
 
-    public String getNum() {
+    public Integer getNum() {
         return num;
     }
 

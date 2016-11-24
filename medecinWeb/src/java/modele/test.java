@@ -5,7 +5,7 @@
  */
 package modele;
 
-import java.util.TreeMap;
+import java.util.Collection;
 
 /**
  *
@@ -14,6 +14,9 @@ import java.util.TreeMap;
 public class test {
     public static void main(String[] args) {
         Pays p = new Pays();
-        System.out.println("");
+        Collection<Specialite> s = p.getLesSpes().values();
+        for (Specialite uneS : s){
+            System.out.println(uneS.getLibelle());
+        }
     }
 }

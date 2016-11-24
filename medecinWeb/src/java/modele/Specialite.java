@@ -6,6 +6,7 @@
 package modele;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -14,7 +15,7 @@ import java.util.TreeSet;
  */
 public class Specialite implements Comparable <Specialite> {
     private String libelle;
-    private Collection<Medecin> lesMeds = new TreeSet<Medecin>();
+    private Collection<Medecin> lesMeds = new HashSet<Medecin>();
 
     public Specialite(String libelle) {
         this.libelle = libelle;

@@ -52,33 +52,31 @@ public class control extends HttpServlet {
         String page3 = "medTrier.jsp";
         String page4 = "spe.jsp";
 
-        String choix = request.getParameter("choix") == null ? "deps" : request.getParameter("choix");
+        String choix = request.getParameter("choix") == null ? "accueil" : request.getParameter("choix");
 
         switch (choix) {
-            case "deps":
-                TreeMap<String, Departement> lesDeps = p.getLesDeps();
-                request.setAttribute("liste", lesDeps);
+            case "accueil":
+                request.setAttribute("listeDeps", p.getLesDeps().values());
+                request.setAttribute("listeSpec", p.getLesSpes().values());
                 request.getRequestDispatcher(page).forward(request, response);
                 break;
-            case "meds":
-                String dep = request.getParameter("dep");
+            case "dep":
+                Integer dep = Integer.parseInt(request.getParameter("dep"));
                 Collection<Medecin> unMed = p.getLeDep(dep).getLesMeds();
                 request.setAttribute("liste", unMed);
                 request.getRequestDispatcher(page2).forward(request, response);
                 break;
             case "trier":
                 Collection<Medecin> lesMedecins = new TreeSet<>();
-                for (Departement unDepartement : this.p.getLesDeps().values()){
-                lesMedecins.addAll(unDepartement.getLesMeds(request.getParameter("prefix")));
-            }
+                for (Departement unDepartement : this.p.getLesDeps().values()) {
+                    lesMedecins.addAll(unDepartement.getLesMeds(request.getParameter("prefix")));
+                }
                 request.setAttribute("liste", lesMedecins);
                 request.getRequestDispatcher(page3).forward(request, response);
                 break;
             case "spec":
-                TreeMap<String, Specialite> lesSpes = p.getLesSpes();
-                request.setAttribute("liste", lesSpes);
-                request.getRequestDispatcher(page4).forward(request, response);
-                
+                request.setAttribute("liste", this.p.getLaSpe(request.getParameter("spec")).getLesMeds());
+                request.getRequestDispatcher(page2).forward(request, response);
                 break;
         }
     }

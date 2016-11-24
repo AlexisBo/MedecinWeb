@@ -13,12 +13,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Liste des départements</h1>
-        <form action="control?choix=meds" method="post">
+        <h2>Liste des départements</h2>
+        <form action="control?choix=dep" method="post">
             <select name="dep">
-                <c:forEach var="p" items="${liste}">
+                <c:forEach var="p" items="${listeDeps}">
 
-                    <option>${p.value.num}</option>
+                    <option value="${p.getNum()}">${p.getNum()}</option>
 
                 </c:forEach>
             </select>
@@ -26,12 +26,12 @@
         </form>
         <br>
         
-        <h1>Liste des Spécialités</h1>
+        <h2>Liste des Spécialités</h2>
         <form action="control?choix=spec" method="post">
-            <select name="dep">
-                <c:forEach var="p" items="${liste}">
+            <select name="spec">
+                <c:forEach var="s" items="${listeSpec}">
 
-                    <option>${p.value.num}</option>
+                    <option value="${s.getLibelle()}">${s.getLibelle()}</option>
 
                 </c:forEach>
             </select>
@@ -39,6 +39,7 @@
         </form>
         <br>
         
+        <h2>Liste triée des noms</h2>
         <form action="control?choix=trier" method="post">
             <input type="text" name="prefix" placeholder="Nom">
             <button type="submit">Valider</button>
